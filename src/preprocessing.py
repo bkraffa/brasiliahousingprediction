@@ -1,5 +1,9 @@
 import pandas as pd
+import numpy as np
 from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import OneHotEncoder
+import pickle
+
 
 def preprocessing(df):
     df.price.replace('\.','', regex=True,inplace=True)
@@ -25,11 +29,21 @@ def preprocessing(df):
     df.loc[df['iptuvsarea'] < 10,'IPTU R$'] = df['IPTU R$'] * 6
     return df
 
-def preprocessing2(df):
-    df = pd.get_dummies(df, columns=['setor'])
+def encoding(df):
     df['price'] = df['price'] + df['Condomínio R$'] + df['IPTU R$']/12
-    cols = ['Cidade','Suítes','Garagens','link','iptuvsarea','areaband','setorareaband','name','Condomínio R$','IPTU R$']
+    cols = ['Cidade','Suítes','Garagens','link','name','Condomínio R$','IPTU R$','setorareaband','iptuvsarea','areaband']
     df.drop(columns=cols,inplace=True)
+    df = df.reset_index(drop=True)
+    ohe = OneHotEncoder(handle_unknown='ignore')
+    ohe.fit(df['setor'].to_numpy().reshape(-1,1))
+    with open('../model/ohe.pkl', 'wb') as f:
+        pickle.dump(ohe, f)
+    dummies = ohe.transform(df['setor'].to_numpy().reshape(-1,1))
+    dummies = pd.DataFrame(dummies.toarray(), columns = ohe.get_feature_names())
+    df.drop(columns = 'setor', inplace=True)
+    df = pd.concat([df,dummies],axis=1)
+    df.to_csv('../data/dffinal.csv')
+    print(df)
     return df
 
 def divide_dataset(df):
