@@ -33,7 +33,7 @@ def RecomendaImoveis(area,quartos,setor):
     model.fit(features)
     dist, idlist = model.kneighbors(features)
 
-    df_original = df_original[['name','link','price','Condomínio R$','valor_total','area','Quartos','Cidade']]
+    df_original = df_original[['name','valor_total','price','Condomínio R$','area','Quartos','Cidade','link']]
 
     mais_proximos = []
     for x in idlist[0]:
@@ -46,5 +46,6 @@ def RecomendaImoveis(area,quartos,setor):
     top10['Quartos'] = top10['Quartos'].astype(int)
     top10['valor_total'] = top10['valor_total'].astype(int)
     top10 = top10.replace({0:'Não disponível'})
+    top10.Cidade = top10.Cidade.str.split('-').str[1].str.strip()
 
     return top10
