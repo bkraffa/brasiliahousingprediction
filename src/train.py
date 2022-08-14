@@ -1,4 +1,3 @@
-from lightgbm import train
 import pandas as pd
 import numpy as np
 import pickle
@@ -7,11 +6,14 @@ from filler import filler
 from sklearn.ensemble import RandomForestRegressor
 from webscraping import ScrapeImoveis 
 from datetime import datetime
+import sklearn
 
 
 def RetornaData():
     data = datetime.today().strftime('%d-%m-%Y')
     return data
+
+
 
 if __name__ == "__main__":
     ScrapeImoveis()
@@ -27,5 +29,6 @@ if __name__ == "__main__":
     print(f'Erro médio da regressão random forest é (Em reais): {round(np.mean(erro),2)}')
     data = RetornaData()
     print(f'Data do treinamento do modelo:{data}')
+    print(f'Versão do sklearn utilizado no treino:{sklearn.__version__}')
     with open("../model/rf.pkl", "wb") as file:
         pickle.dump(obj=regressor, file=file)

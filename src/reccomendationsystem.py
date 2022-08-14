@@ -44,8 +44,10 @@ def RecomendaImoveis(area,quartos,setor):
     top10.fillna(0,inplace=True)
     top10['Condomínio R$'] = top10['Condomínio R$'].astype(int)
     top10['Quartos'] = top10['Quartos'].astype(int)
+    top10['price'] = top10['price'].astype(int)
+    top10['valor_total'] = top10['price'] + top10['Condomínio R$']
     top10['valor_total'] = top10['valor_total'].astype(int)
-    top10 = top10.replace({0:'Não disponível'})
+    #top10 = top10.replace({0:'Não disponível'})
     top10.Cidade = top10.Cidade.str.split('-').str[1].str.strip()
 
     return top10
