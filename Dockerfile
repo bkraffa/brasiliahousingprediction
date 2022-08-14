@@ -9,10 +9,10 @@ COPY . .
 
 RUN chmod +x /bsbhousingprediction/start.bash
 
-CMD ["sh", "-c", "uvicorn model_api:app --host 0.0.0.0 --port $PORT"]
+#CMD ["sh", "-c", "uvicorn model_api:app --host 0.0.0.0 --port $PORT"]
 #codigo acima pra rodar localmente, depois é necessário rodar o streamlit run streamlit.py
 
-#CMD ["/bin/bash", "-c", "/bsbhousing/start.bash && sleep 5 && streamlit run streamlit.py --server.port $PORT"]
+CMD ["/bin/bash", "-c", "/bsbhousingprediction/start.bash && sleep 5 && streamlit run streamlit.py --server.port $PORT"]
 #codigo acima é pra o deploy em produção
 
 

@@ -10,7 +10,7 @@ def RecomendaImoveis(area,quartos,setor):
     df_original = pd.read_csv('data/dfpreprocessed.csv',error_bad_lines = False)
     df_original.drop(columns = 'Unnamed: 0', inplace=True)
     df_original['valor_total'] = df_original['price'] + df_original['Condomínio R$']
-    df = pd.read_csv('data\dffinal.csv',error_bad_lines = False)
+    df = pd.read_csv('data/dffinal.csv',error_bad_lines = False)
     df.drop(columns = 'Unnamed: 0', inplace=True)
 
     userInput = [{'area':area,'Quartos':quartos,'setor':setor}]

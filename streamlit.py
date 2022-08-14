@@ -102,7 +102,6 @@ with st.form('my_ml'):
     }
 
     setor = dict_renomear[setor]
-    st.write(setor)
 
 if predict:
     predict_results(MODEL_URL,area,quartos,setor)
